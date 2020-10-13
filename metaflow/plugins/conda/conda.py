@@ -153,7 +153,8 @@ class Conda(object):
                     **{
                         'CONDA_JSON': 'True',
                         'CONDA_SUBDIR': (architecture if architecture else ''),
-                        'CONDA_USE_ONLY_TAR_BZ2': 'True'
+                        'CONDA_USE_ONLY_TAR_BZ2': 'True',
+                        'CONDA_PKGS_DIRS': '/Volumes/condaworkspace/'
                     })
                 ).strip()
         except subprocess.CalledProcessError as e:

@@ -12,7 +12,7 @@ from metaflow.plugins import ResourcesDecorator, BatchDecorator, RetryDecorator
 from metaflow.parameters import deploy_time_eval
 from metaflow.util import compress_list, dict_to_cli_options, to_pascalcase
 from metaflow.metaflow_config import SFN_IAM_ROLE, \
-    EVENTS_SFN_ACCESS_IAM_ROLE, SFN_DYNAMO_DB_TABLE, AWS_PARTITION
+    EVENTS_SFN_ACCESS_IAM_ROLE, SFN_DYNAMO_DB_TABLE
 from metaflow import R
 
 from .step_functions_client import StepFunctionsClient
@@ -754,8 +754,7 @@ class State(object):
         return self
 
     def batch(self, job):
-        resource = 'arn:%s:states:::batch:submitJob.sync' % AWS_PARTITION
-        self.resource(resource) \
+        self.resource('arn:aws:states:::batch:submitJob.sync') \
             .parameter('JobDefinition', job.payload['jobDefinition']) \
             .parameter('JobName', job.payload['jobName']) \
             .parameter('JobQueue', job.payload['jobQueue']) \
@@ -769,8 +768,7 @@ class State(object):
         return self
 
     def dynamo_db(self, table_name, primary_key, values):
-        resource = 'arn:%s:states:::dynamodb:getItem' % AWS_PARTITION
-        self.resource(resource) \
+        self.resource('arn:aws:states:::dynamodb:getItem') \
             .parameter('TableName', table_name) \
             .parameter('Key', {
                 "pathspec": {

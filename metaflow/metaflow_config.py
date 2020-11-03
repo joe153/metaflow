@@ -117,40 +117,6 @@ EVENTS_SFN_ACCESS_IAM_ROLE = from_conf("METAFLOW_EVENTS_SFN_ACCESS_IAM_ROLE")
 # sandbox.
 SFN_STATE_MACHINE_PREFIX = None
 
-
-def get_authenticated_boto3_session():
-    from metaflow.exception import MetaflowException
-    try:
-        import boto3
-    except (NameError, ImportError):
-        raise MetaflowException(
-            "Could not import module 'boto3'. Install boto3 first.")
-
-    return boto3.session.Session()
-
-
-def get_partition_for_region():
-    session = get_authenticated_boto3_session()
-    region_name = session.region_name
-    partitions = session.get_available_partitions()
-    for partition in partitions:
-        regions = session.get_available_regions('stepfunctions', partition)
-        if region_name in regions:
-            return partition
-    # use the default aws partition in case nothing is found
-    return 'aws'
-
-
-AWS_PARTITION = get_partition_for_region()
-
-
-def get_region():
-    session = get_authenticated_boto3_session()
-    return session.region_name
-
-
-AWS_REGION = get_region()
-
 ###
 # Conda configuration
 ###

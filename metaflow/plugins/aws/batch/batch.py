@@ -11,7 +11,7 @@ from requests.exceptions import HTTPError
 from metaflow.exception import MetaflowException, MetaflowInternalError
 from metaflow.metaflow_config import BATCH_METADATA_SERVICE_URL, DATATOOLS_S3ROOT, \
     DATASTORE_LOCAL_DIR, DATASTORE_SYSROOT_S3, DEFAULT_METADATA, \
-    BATCH_METADATA_SERVICE_HEADERS, AWS_REGION
+    BATCH_METADATA_SERVICE_HEADERS
 from metaflow import util
 
 from .batch_client import BatchClient
@@ -151,9 +151,8 @@ class Batch(object):
             .environment_variable('METAFLOW_DATASTORE_SYSROOT_S3', DATASTORE_SYSROOT_S3) \
             .environment_variable('METAFLOW_DATATOOLS_S3ROOT', DATATOOLS_S3ROOT) \
             .environment_variable('METAFLOW_DEFAULT_DATASTORE', 's3') \
-            .environment_variable('METAFLOW_DEFAULT_METADATA', DEFAULT_METADATA) \
-            .environment_variable('AWS_DEFAULT_REGION', AWS_REGION)
-            # Skip setting METAFLOW_DATASTORE_SYSROOT_LOCAL because metadata sync between the local user
+            .environment_variable('METAFLOW_DEFAULT_METADATA', DEFAULT_METADATA)
+            # Skip setting METAFLOW_DATASTORE_SYSROOT_LOCAL because metadata sync between the local user 
             # instance and the remote AWS Batch instance assumes metadata is stored in DATASTORE_LOCAL_DIR 
             # on the remote AWS Batch instance; this happens when METAFLOW_DATASTORE_SYSROOT_LOCAL 
             # is NOT set (see get_datastore_root_from_config in datastore/local.py).

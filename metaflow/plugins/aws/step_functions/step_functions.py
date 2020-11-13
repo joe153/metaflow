@@ -635,8 +635,7 @@ class StepFunctions(object):
                  '--monitor=%s' % self.monitor.monitor_type,
                  '--no-pylint',
                  'init',
-                 '--run-id sfn-$METAFLOW_RUN_ID',
-                 '--task-id %s' % task_id_params]
+                 '--run-id sfn-$METAFLOW_RUN_ID']
 
             # If the start step gets retried, we must be careful not to 
             # regenerate multiple parameters tasks. Hence we check first if 
